@@ -11,9 +11,12 @@ import 'package:fluttershare/pages/upload.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn(); //구글 로그인을 구현하기 위해 필요한 객체
-final CollectionReference usersRef = Firestore.instance.collection('users');//Firestore로부터 'users' collection의 reference를 받아온다.
-final CollectionReference postsRef = Firestore.instance.collection('posts');//Firestore로부터 'posts' collection의 reference를 받아온다.
-final StorageReference storageRef = FirebaseStorage.instance.ref();// 파이어베이스스토레이지에 저장할 때 사용하기 위한 레퍼런스
+final CollectionReference usersRef = Firestore.instance
+    .collection('users'); //Firestore로부터 'users' collection의 reference를 받아온다.
+final CollectionReference postsRef = Firestore.instance
+    .collection('posts'); //Firestore로부터 'posts' collection의 reference를 받아온다.
+final StorageReference storageRef =
+    FirebaseStorage.instance.ref(); // 파이어베이스스토레이지에 저장할 때 사용하기 위한 레퍼런스
 final DateTime timestamp = DateTime.now();
 User currentUser;
 
@@ -33,17 +36,25 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     pageController = PageController();
-    googleSignIn.onCurrentUserChanged.listen((account) {
+    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       handleSignIn(account);
     }, onError: (err) {
       print('Error sigining in: $err');
     });
     // Reauthenticate user when app is opened
-    googleSignIn.signInSilently(suppressErrors: false).then((account) {
-      handleSignIn(account);
-    }).catchError((err) {
-      print('Error sigining in: $err');
-    });
+    // TODO: Commented Out because of error
+
+    //googleSignIn.signInSilently(suppressErrors: false).then((GoogleSignInAccount account) {
+    //  handleSignIn(account);
+    //}).catchError((err) {
+    //  print('Error sigining in: $err');
+    //  if(err.code == 'sign_in_required'){
+    //    print('login in 1st time');
+    //    login();
+    //  } else if(err.code == 'sign_in_failed'){
+    //    print('sign in failed');
+    //  }
+    //});
   }
 
   handleSignIn(GoogleSignInAccount account) {
@@ -58,13 +69,15 @@ class _HomeState extends State<Home> {
       });
     }
   }
-  createUserInFirestore() async{
+
+  createUserInFirestore() async {
     // 1) check if user exists in users collection in database(according to their id)
     final GoogleSignInAccount user = googleSignIn.currentUser;
     DocumentSnapshot doc = await usersRef.document(user.id).get();
-    if(!doc.exists){
-      // 2) if the user doesn't exists then we want to take them to the create account page  
-      final username = await Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccount()));//TODO: 이해
+    if (!doc.exists) {
+      // 2) if the user doesn't exists then we want to take them to the create account page
+      final username = await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => CreateAccount())); //TODO: 이해
 
       // 3) get username from create account, use it to make new user document in users collection
       usersRef.document(user.id).setData({
@@ -80,10 +93,7 @@ class _HomeState extends State<Home> {
       doc = doc = await usersRef.document(user.id).get();
     }
     currentUser = User.fromDocument(doc);
-    print(currentUser);
-    print(currentUser.username);
   }
-
 
   @override
   void dispose() {
@@ -144,7 +154,10 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.notifications_active),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.photo_camera),
+            icon: Icon(
+              Icons.photo_camera,
+              size: 35.0,
+            ),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
