@@ -15,6 +15,7 @@ final CollectionReference usersRef = Firestore.instance
     .collection('users'); //Firestore로부터 'users' collection의 reference를 받아온다.
 final CollectionReference postsRef = Firestore.instance
     .collection('posts'); //Firestore로부터 'posts' collection의 reference를 받아온다.
+final commentsRef = Firestore.instance.collection('comments');
 final StorageReference storageRef =
     FirebaseStorage.instance.ref(); // 파이어베이스스토레이지에 저장할 때 사용하기 위한 레퍼런스
 final DateTime timestamp = DateTime.now();

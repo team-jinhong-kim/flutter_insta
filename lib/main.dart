@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'pages/home.dart';
+import 'package:fluttershare/pages/home.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
       title: 'FlutterShare',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.deepPurple,//색깔은 material.io에서 확인 가능
+        primaryColor: Colors.deepPurple, //색깔은 material.io에서 확인 가능
         accentColor: Colors.teal,
-        ),
-      home: Home(),//pages/home.dart as a default page
+      ),
+      home: Home(), //pages/home.dart as a default page
     );
   }
 }
