@@ -18,6 +18,8 @@ final CollectionReference postsRef = Firestore.instance
 final commentsRef = Firestore.instance.collection('comments');
 final StorageReference storageRef =
     FirebaseStorage.instance.ref(); // 파이어베이스스토레이지에 저장할 때 사용하기 위한 레퍼런스
+final CollectionReference activityFeedRef = Firestore.instance
+    .collection('feed'); //Activity Feed를 위한 Firebase collection Reference
 final DateTime timestamp = DateTime.now();
 User currentUser;
 
