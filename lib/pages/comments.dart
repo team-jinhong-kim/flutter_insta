@@ -58,6 +58,9 @@ class CommentsState extends State<Comments> {
         });
   }
 
+  /*
+   * Adding Comment & Comment Feed
+   */
   addComment() {
     commentsRef.document(postId).collection("comments").add({
       "username": currentUser.username,
@@ -65,6 +68,16 @@ class CommentsState extends State<Comments> {
       "timestamp": timestamp,
       "avatarUrl": currentUser.photoUrl,
       "userId": currentUser.id,
+    });
+    activityFeedRef.document(postOwnerId).collection('feedItems').add({
+      "type": "comment",
+      "commentData": commentController.text,
+      "timestamp": timestamp,
+      "postId": postId,
+      "userId": currentUser.id,
+      "username": currentUser.username,
+      "userProfileImg": currentUser.photoUrl,
+      "mediaUrl": postMediaUrl,
     });
     commentController.clear();
   }
