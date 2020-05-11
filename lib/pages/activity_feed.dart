@@ -34,6 +34,7 @@ class _ActivityFeedState extends State<ActivityFeed> {
     return Scaffold(
       appBar: header(context, titleText: "Activity Feed"),
       body: Container(
+        color: Colors.yellow.shade500,
         child: FutureBuilder(
           future: getActivityFeed(),
           builder: (context, snapshot) {
